@@ -143,7 +143,7 @@ The scripture text and topic content are quoted from publications of the Watch T
 
 アプリのソースコード（HTML、CSS、JavaScript）は [MITライセンス](LICENSE) で公開しています。
 
-聖句本文とトピック内容は、ものみの塔聖書冊子協会の出版物（『新世界訳聖書』および『愛込（Love People — Make Disciples）』）からの引用です。これらの著作権は原典の発行者に帰属し、本リポジトリのMITライセンスの対象には含まれません。
+聖句本文とトピック内容は、ものみの塔聖書冊子協会の出版物（『新世界訳聖書』および『愛を込めて弟子を育てる（Love People — Make Disciples）』）からの引用です。これらの著作権は原典の発行者に帰属し、本リポジトリのMITライセンスの対象には含まれません。
 
 ## 謝辞
 
