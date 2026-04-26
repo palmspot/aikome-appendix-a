@@ -31,7 +31,7 @@ A simple, browser-based flashcard app for studying Appendix A of *Love People �
 
 Visit the live site:
 
-> 📖 **https://YOUR-USERNAME.github.io/aikome-appendix-a/?key=b7e3a2f8d1c9a0b4e5f6g7h8i9j0k1l2m3n4o5p6**
+> 📖 **https://palmspot.github.io/aikome-appendix-a/?key=b7e3a2f8d1c9a0b4e5f6g7h8i9j0k1l2m3n4o5p6**
 
 The `?key=...` portion is required to access the app.
 
