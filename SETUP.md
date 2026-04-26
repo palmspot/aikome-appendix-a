@@ -32,14 +32,14 @@ GitHubで新しいリポジトリを作成：
 | Source | Deploy from a branch |
 | Branch | `main` / `/ (root)` |
 
-**Save** を押して数分待つと、`https://YOUR-USERNAME.github.io/aikome-appendix-a/` で公開されます。
+**Save** を押して数分待つと、`https://palmspot.github.io/aikome-appendix-a/` で公開されます。
 
 ## 4. 動作確認
 
 公開URLに `?key=b7e3a2f8d1c9a0b4e5f6g7h8i9j0k1l2m3n4o5p6` を付けてアクセス：
 
 ```
-https://YOUR-USERNAME.github.io/aikome-appendix-a/?key=b7e3a2f8d1c9a0b4e5f6g7h8i9j0k1l2m3n4o5p6
+https://palmspot.github.io/aikome-appendix-a/?key=b7e3a2f8d1c9a0b4e5f6g7h8i9j0k1l2m3n4o5p6
 ```
 
 「アクセスが許可されていません」と出ずにアプリが起動すれば成功。
