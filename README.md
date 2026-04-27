@@ -79,7 +79,7 @@ The scripture text and topic content are quoted from publications of the Watch T
 
 # 愛込付録A学習アプリ
 
-『**愛込（Love People — Make Disciples）**』付録A の暗唱用フラッシュカードアプリです。PC・タブレット・スマートフォンで動作します。インストール不要、アカウント不要、初回読み込み後はオフラインでも動きます。
+『**愛込（Love People — Make Disciples）**』付録A の暗記用フラッシュカードアプリです。PC・タブレット・スマートフォンで動作します。インストール不要、アカウント不要、初回読み込み後はオフラインでも動きます。
 
 ## 主な機能
 
