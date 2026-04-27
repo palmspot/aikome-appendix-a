@@ -243,6 +243,9 @@
         }
         .question-text {
             font-size: 1.5rem; font-weight: 600; color: var(--gray-800);
+            text-align: left; line-height: 1.5;
+        }
+        .question-text.is-short {
             text-align: center; line-height: 1.4;
         }
         .answer-text {
@@ -2529,9 +2532,10 @@
             }
             
             currentVerse = studySession.verses[studySession.currentIndex];
-            const { question, answer } = getQuestionAnswer(currentVerse, currentStudyMode);
+            const { question, answer, isShortQuestion } = getQuestionAnswer(currentVerse, currentStudyMode);
             
             elements.questionText.innerHTML = question;
+            elements.questionText.classList.toggle('is-short', !!isShortQuestion);
             elements.answerText.innerHTML = answer;
             document.getElementById('current-card').textContent = studySession.currentIndex + 1;
             
@@ -2552,25 +2556,31 @@
                 mode = directions[Math.floor(Math.random() * directions.length)];
             }
             document.getElementById('study-mode-info').textContent = getModeName(mode);
-            
+
             let question = verse.script;
             let answer = verse.contents;
+            // The question is "short" only when it's the bare scripture reference
+            // (e.g. "ルカ21:10,11" / "Luke 21:10, 11"). Long sentences should be left-aligned.
+            let isShortQuestion = true;
 
             switch (mode) {
                 case 'content-to-script':
                     question = verse.contents;
                     answer = `<div class="answer-script">${verse.script}</div>`;
+                    isShortQuestion = false;
                     break;
                 case 'script-to-topics':
                     question = verse.script;
                     answer = verse.topics;
+                    isShortQuestion = true;
                     break;
                 case 'topics-to-script':
                     question = verse.topics;
                     answer = `<div class="answer-script">${verse.script}</div>`;
+                    isShortQuestion = false;
                     break;
             }
-            return { question: question, answer: answer };
+            return { question, answer, isShortQuestion };
         }
 
         function getModeName(mode) {
