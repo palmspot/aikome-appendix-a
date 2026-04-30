@@ -2212,22 +2212,29 @@
             return encodeURIComponent(q).replace(/\(/g, '%28').replace(/\)/g, '%29');
         }
 
+        function extractBookChapter(script) {
+            const beforeColon = script.replace(/:.*$/, '').trim();
+            return beforeColon.replace(/([^\d\s])(\d)/, '$1 $2');
+        }
+
         function getTestimonyWolUrl(script) {
+            const bookChapter = extractBookChapter(script);
             if (currentLang === 'ja') {
-                const q = `(こう言えるかもしれません) & (${script}) | (証言例) & (${script}) | (どんな点を話せますか) & (${script})`;
+                const q = `(こう言えるかもしれません) & (${bookChapter}) | (証言例) & (${bookChapter}) | (どんな点を話せますか) & (${bookChapter})`;
                 return `https://wol.jw.org/ja/wol/s/r7/lp-j?q=${encodeSearchQuery(q).replace(/%20/g, '+')}&st=f&p=doc&r=newest`;
             } else {
-                const q = `(Sample Presentations) & (${script}) | (What to Say About) & (${script})`;
+                const q = `(Sample Presentations) & (${bookChapter}) | (What to Say About) & (${bookChapter})`;
                 return `https://wol.jw.org/en/wol/s/r1/lp-e?q=${encodeSearchQuery(q).replace(/%20/g, '+')}&st=f&p=doc&r=newest`;
             }
         }
 
         function getTestimonyVideoUrl(script) {
+            const bookChapter = extractBookChapter(script);
             if (currentLang === 'ja') {
-                const q = `(話し合いのサンプル)&(${script})`;
+                const q = `(話し合いのサンプル)&(${bookChapter})`;
                 return `https://www.jw.org/ja/検索/?q=${encodeSearchQuery(q)}&link=${encodeURIComponent('/results/J/videos?sort=rel&q=')}`;
             } else {
-                const q = `(Sample Presentations)&(${script})`;
+                const q = `(Sample Presentations)&(${bookChapter})`;
                 return `https://www.jw.org/en/search/?q=${encodeSearchQuery(q)}&link=${encodeURIComponent('/results/E/videos?sort=rel&q=')}`;
             }
         }
