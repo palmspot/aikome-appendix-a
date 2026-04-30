@@ -1043,6 +1043,18 @@
         .verse-card-topic strong {
             color: var(--primary-700); font-weight: 600;
         }
+        .verse-card-header-right {
+            display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0;
+        }
+        .verse-card-testimony-btn {
+            padding: 0.25rem 0.5rem;
+        }
+        .testimony-wol-link {
+            background: var(--primary-50); border-color: var(--primary-200);
+        }
+        .testimony-video-link {
+            background: #f0f7ff; border-color: #bfdbfe;
+        }
 
         /* Topic group */
         .topic-group {
@@ -1563,6 +1575,16 @@
                     <span data-i18n="wolLink">オンライン・ライブラリーで開く</span>
                     <i class="fas fa-external-link-alt"></i>
                 </a>
+                <a id="modal-testimony-wol-link" class="wol-link testimony-wol-link" href="#" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-search"></i>
+                    <span data-i18n="testimonyWolLink">証言例をWOLで検索</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a id="modal-testimony-video-link" class="wol-link testimony-video-link" href="#" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-video"></i>
+                    <span data-i18n="testimonyVideoLink">証言動画をjw.orgで検索</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -1697,6 +1719,8 @@
                 appShort: '愛込付録A',
                 online: 'オンライン',
                 modalNotesAdd: 'メモ',
+                testimonyWolLink: '証言例をWOLで検索',
+                testimonyVideoLink: '証言動画をjw.orgで検索',
             },
             en: {
                 appTitle: 'Aikome Appendix A Study App',
@@ -1806,6 +1830,8 @@
                 appShort: 'Aikome App.A',
                 online: 'online',
                 modalNotesAdd: 'Notes',
+                testimonyWolLink: 'Search Presentations on WOL',
+                testimonyVideoLink: 'Search Videos on jw.org',
             }
         };
         function t(key) { return I18N[currentLang][key] || I18N.ja[key] || key; }
@@ -1850,6 +1876,8 @@
             modalTopicSection: document.getElementById('modal-topic-section'),
             modalTopicText: document.getElementById('modal-topic-text'),
             modalWolLink: document.getElementById('modal-wol-link'),
+            modalTestimonyWolLink: document.getElementById('modal-testimony-wol-link'),
+            modalTestimonyVideoLink: document.getElementById('modal-testimony-video-link'),
             modalNotesList: document.getElementById('modal-notes-list'),
             modalNotesCount: document.getElementById('modal-notes-count'),
             modalNoteInput: document.getElementById('modal-note-input'),
@@ -2180,6 +2208,30 @@
             return `${base}#p${12 + verseId}`;
         }
 
+        function encodeSearchQuery(q) {
+            return encodeURIComponent(q).replace(/\(/g, '%28').replace(/\)/g, '%29');
+        }
+
+        function getTestimonyWolUrl(script) {
+            if (currentLang === 'ja') {
+                const q = `(こう言えるかもしれません) & (${script}) | (証言例) & (${script}) | (どんな点を話せますか) & (${script})`;
+                return `https://wol.jw.org/ja/wol/s/r7/lp-j?q=${encodeSearchQuery(q).replace(/%20/g, '+')}&st=f&p=doc&r=newest`;
+            } else {
+                const q = `(Sample Presentations) & (${script}) | (What to Say About) & (${script})`;
+                return `https://wol.jw.org/en/wol/s/r1/lp-e?q=${encodeSearchQuery(q).replace(/%20/g, '+')}&st=f&p=doc&r=newest`;
+            }
+        }
+
+        function getTestimonyVideoUrl(script) {
+            if (currentLang === 'ja') {
+                const q = `(話し合いのサンプル)&(${script})`;
+                return `https://www.jw.org/ja/検索/?q=${encodeSearchQuery(q)}&link=${encodeURIComponent('/results/J/videos?sort=rel&q=')}`;
+            } else {
+                const q = `(Sample Presentations)&(${script})`;
+                return `https://www.jw.org/en/search/?q=${encodeSearchQuery(q)}&link=${encodeURIComponent('/results/E/videos?sort=rel&q=')}`;
+            }
+        }
+
         // --- Modal ---
         function openModal(verse) {
             currentModalVerseId = verse.id;
@@ -2192,6 +2244,8 @@
                 elements.modalTopicSection.classList.add('hidden');
             }
             elements.modalWolLink.href = getWolUrl(verse.id);
+            elements.modalTestimonyWolLink.href = getTestimonyWolUrl(verse.script);
+            elements.modalTestimonyVideoLink.href = getTestimonyVideoUrl(verse.script);
             elements.modalNoteInput.value = '';
             renderModalNotes(verse.id);
             elements.scriptureModal.classList.add('visible');
@@ -3094,6 +3148,8 @@
             const topics = highlightQuery ? highlightMatch(verse.topics, highlightQuery) : escapeHtml(verse.topics);
             const subheading = verse.subheading ? escapeHtml(verse.subheading) : '';
             const wolUrl = getWolUrl(verse.id);
+            const testimonyWolUrl = getTestimonyWolUrl(verse.script);
+            const testimonyVideoUrl = getTestimonyVideoUrl(verse.script);
 
             const verseNotes = getNotesForVerse(verse.id);
             const noteCount = verseNotes.length;
@@ -3126,13 +3182,27 @@
                             ${subheading ? `<div class="verse-card-badge">${subheading}</div>` : ''}
                             ${noteBadge}
                         </div>
-                        <a href="${wolUrl}" target="_blank" rel="noopener noreferrer"
-                           class="verse-card-link"
-                           title="${t('wolLink')}"
-                           onclick="event.stopPropagation();">
-                            <i class="fas fa-external-link-alt"></i>
-                            WOL
-                        </a>
+                        <div class="verse-card-header-right">
+                            <a href="${wolUrl}" target="_blank" rel="noopener noreferrer"
+                               class="verse-card-link"
+                               title="${t('wolLink')}"
+                               onclick="event.stopPropagation();">
+                                <i class="fas fa-external-link-alt"></i>
+                                WOL
+                            </a>
+                            <a href="${testimonyWolUrl}" target="_blank" rel="noopener noreferrer"
+                               class="verse-card-link verse-card-testimony-btn"
+                               title="${t('testimonyWolLink')}"
+                               onclick="event.stopPropagation();">
+                                <i class="fas fa-search"></i>
+                            </a>
+                            <a href="${testimonyVideoUrl}" target="_blank" rel="noopener noreferrer"
+                               class="verse-card-link verse-card-testimony-btn"
+                               title="${t('testimonyVideoLink')}"
+                               onclick="event.stopPropagation();">
+                                <i class="fas fa-video"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="verse-card-contents">${contents}</div>
                     <div class="verse-card-topic"><strong>${t('topic')}</strong> ${topics}</div>
