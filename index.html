@@ -2253,6 +2253,9 @@
             elements.modalWolLink.href = getWolUrl(verse.id);
             elements.modalTestimonyWolLink.href = getTestimonyWolUrl(verse.script);
             elements.modalTestimonyVideoLink.href = getTestimonyVideoUrl(verse.script);
+            const showTestimony = currentLang === 'ja';
+            elements.modalTestimonyWolLink.classList.toggle('hidden', !showTestimony);
+            elements.modalTestimonyVideoLink.classList.toggle('hidden', !showTestimony);
             elements.modalNoteInput.value = '';
             renderModalNotes(verse.id);
             elements.scriptureModal.classList.add('visible');
@@ -3197,6 +3200,7 @@
                                 <i class="fas fa-external-link-alt"></i>
                                 WOL
                             </a>
+                            ${currentLang === 'ja' ? `
                             <a href="${testimonyWolUrl}" target="_blank" rel="noopener noreferrer"
                                class="verse-card-link verse-card-testimony-btn"
                                title="${t('testimonyWolLink')}"
@@ -3208,7 +3212,7 @@
                                title="${t('testimonyVideoLink')}"
                                onclick="event.stopPropagation();">
                                 <i class="fas fa-video"></i>
-                            </a>
+                            </a>` : ''}
                         </div>
                     </div>
                     <div class="verse-card-contents">${contents}</div>
