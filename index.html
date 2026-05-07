@@ -1497,7 +1497,7 @@
                         </h3>
                         <div class="goal-setting-body">
                             <label for="goal-input" data-i18n="dailyGoalLabel">1日の学習目標：</label>
-                            <input type="number" id="goal-input" min="1" max="34" step="1" class="goal-input">
+                            <input type="number" id="goal-input" min="1" max="35" step="1" class="goal-input">
                             <span data-i18n="verses">節</span>
                         </div>
                     </div>
@@ -2055,7 +2055,7 @@
                 elements.goalInput.addEventListener('change', () => {
                     let v = parseInt(elements.goalInput.value);
                     if (isNaN(v) || v < 1) v = 1;
-                    if (v > 34) v = 34;
+                    if (v > 35) v = 35;
                     settings.dailyGoal = v;
                     saveSettings();
                     elements.goalInput.value = v;
@@ -2197,7 +2197,7 @@
         }
 
         // --- WOL External Link ---
-        // Maps verse id (1-34) to the paragraph anchor on wol.jw.org.
+        // Maps verse id (1-35) to the paragraph anchor on wol.jw.org.
         // Each topic is at #p{12 + id}. Same anchor pattern in both languages.
         const WOL_BASE_URLS = {
             ja: 'https://wol.jw.org/ja/wol/d/r7/lp-j/1102023316',
@@ -2569,7 +2569,7 @@
                 sessionVerses = [...bibleData];
             }
             shuffleArray(sessionVerses);
-            studySession.verses = sessionVerses.slice(0, 34);
+            studySession.verses = sessionVerses.slice(0, 35);
 
             if (studySession.verses.length === 0) {
                 alert(t('noCards'));
