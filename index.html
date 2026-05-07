@@ -2205,6 +2205,7 @@
         };
         function getWolUrl(verseId) {
             const base = WOL_BASE_URLS[currentLang] || WOL_BASE_URLS.ja;
+            if (verseId === 35) return `${base}#h=32`;
             return `${base}#p${12 + verseId}`;
         }
 
